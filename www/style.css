@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+article {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+}
