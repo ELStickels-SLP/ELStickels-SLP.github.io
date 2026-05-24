@@ -2,7 +2,7 @@
 
 
 #!/usr/bin/env bash
-set -euo pipefail
+# set -euo pipefail
 
 usage() {
     cat <<EOF
@@ -18,10 +18,15 @@ EOF
 
 build() {
     echo "Running build..."
+
+    echo "Copying static files..."
     rm -rf www/*
 
     mkdir -p www
     cp static/* www
+    
+    echo "Building TypeScript..."
+    yarn build
 }
 
 serve() {
