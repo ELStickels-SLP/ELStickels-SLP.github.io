@@ -6,7 +6,6 @@
 // let audioContext = wavesAudio.audioContext;
 const audioContext = new AudioContext();
 
-var speedFactor = 1.0;
 var pitchFactor = 1.0;
 
 async function init() {
@@ -17,12 +16,7 @@ async function init() {
 
   let [playerEngine, phaseVocoderNode] = await setupEngine();
 
-  //   let playControl = new wavesAudio.PlayControl(playerEngine);
-  //   playControl.setLoopBoundaries(0, buffer.duration);
-  //   playControl.loop = true;
 
-  //   setupPlayPauseButton(playControl);
-  //   setupSpeedSlider(playControl, phaseVocoderNode);
   setupPitchSlider(phaseVocoderNode);
   //   setupTimeline(, playControl);
 }
@@ -54,49 +48,6 @@ async function setupEngine() {
   return [source, phaseVocoderNode];
 }
 
-function setupPlayPauseButton(playControl) {
-  let $playButton = document.querySelector("#play-pause");
-  let $playIcon = $playButton.querySelector(".play");
-  let $pauseIcon = $playButton.querySelector(".pause");
-  $playButton.addEventListener(
-    "click",
-    function () {
-      if (audioContext.state === "suspended") {
-        audioContext.resume();
-      }
-
-      if (this.dataset.playing === "false") {
-        playControl.start();
-        this.dataset.playing = "true";
-        $playIcon.style.display = "none";
-        $pauseIcon.style.display = "inline";
-      } else if (this.dataset.playing === "true") {
-        playControl.pause();
-        this.dataset.playing = "false";
-        $pauseIcon.style.display = "none";
-        $playIcon.style.display = "inline";
-      }
-    },
-    false,
-  );
-}
-
-// function setupSpeedSlider(playControl, phaseVocoderNode) {
-//   let pitchFactorParam = phaseVocoderNode.parameters.get("pitchFactor");
-//   let $speedSlider = document.querySelector("#speed");
-//   let $valueLabel = document.querySelector("#speed-value");
-//   $speedSlider.addEventListener(
-//     "input",
-//     function () {
-//       speedFactor = parseFloat(this.value);
-//     //   playControl.speed = speedFactor;
-//       pitchFactorParam.value = (pitchFactor * 1) / speedFactor;
-//       $valueLabel.innerHTML = speedFactor.toFixed(2);
-//     },
-//     false,
-//   );
-// }
-
 function setupPitchSlider(phaseVocoderNode) {
   let pitchFactorParam = phaseVocoderNode.parameters.get("pitchFactor");
   let $pitchSlider = document.querySelector("#pitch");
@@ -105,7 +56,7 @@ function setupPitchSlider(phaseVocoderNode) {
     "input",
     function () {
       pitchFactor = parseFloat(this.value);
-      pitchFactorParam.value = (pitchFactor * 1) / speedFactor;
+      pitchFactorParam.value = (pitchFactor * 1);
       $valueLabel.innerHTML = pitchFactor.toFixed(2);
     },
     false,
