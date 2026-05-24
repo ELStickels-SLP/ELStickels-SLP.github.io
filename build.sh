@@ -23,7 +23,7 @@ build() {
     rm -rf www/*
 
     mkdir -p www
-    cp static/* www
+    cp -r static/* www
     
     echo "Building TypeScript..."
     yarn build
