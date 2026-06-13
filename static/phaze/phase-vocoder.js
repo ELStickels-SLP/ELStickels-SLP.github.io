@@ -510,7 +510,7 @@ FFT.prototype._singleRealTransform4 = function _singleRealTransform4(outOff,
 },{}],2:[function(require,module,exports){
 "use strict";
 
-const WEBAUDIO_BLOCK_SIZE = 2048;
+const WEBAUDIO_BLOCK_SIZE = 128;
 
 /** Overlap-Add Node */
 class OLAProcessor extends AudioWorkletProcessor {
