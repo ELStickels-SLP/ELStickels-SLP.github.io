@@ -35,7 +35,7 @@ async function setupEngine() {
   const constraints = { audio: true };
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
-  await audioContext.audioWorklet.addModule("phase-vocoder.min.js");
+  await audioContext.audioWorklet.addModule("phase-vocoder.js");
   let phaseVocoderNode = new AudioWorkletNode(
     audioContext,
     "phase-vocoder-processor",

@@ -775,7 +775,7 @@ class PhaseVocoderProcessor extends OLAProcessor {
             let real = this.freqComplexBuffer[j];
             let imag = this.freqComplexBuffer[j + 1];
             // no need to sqrt for peak finding
-            this.magnitudes[i] = real ** 2 + imag ** 2;
+            this.magnitudes[i] = real * real + imag * imag;
             i+=1;
             j+=2;
         }
@@ -833,6 +833,11 @@ class PhaseVocoderProcessor extends OLAProcessor {
             // shift whole region of influence around peak to shifted peak
             let startOffset = startIndex - peakIndex;
             let endOffset = endIndex - peakIndex;
+            
+            // apply phase correction for current peak
+            let omegaDelta = 2 * Math.PI * (peakIndexShifted - peakIndex) / this.fftSize;
+            let phaseShiftReal = Math.cos(omegaDelta * this.timeCursor);
+            let phaseShiftImag = Math.sin(omegaDelta * this.timeCursor);
             for (var j = startOffset; j < endOffset; j++) {
                 let binIndex = peakIndex + j;
                 let binIndexShifted = peakIndexShifted + j;
@@ -840,11 +845,6 @@ class PhaseVocoderProcessor extends OLAProcessor {
                 if (binIndexShifted >= this.magnitudes.length) {
                     break;
                 }
-
-                // apply phase correction
-                let omegaDelta = 2 * Math.PI * (binIndexShifted - binIndex) / this.fftSize;
-                let phaseShiftReal = Math.cos(omegaDelta * this.timeCursor);
-                let phaseShiftImag = Math.sin(omegaDelta * this.timeCursor);
 
                 let indexReal = binIndex * 2;
                 let indexImag = indexReal + 1;
